@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164AE81BBBFC500040949D /* AppDelegate.swift */; };
-		DB164AEB1BBBFC500040949D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164AEA1BBBFC500040949D /* ViewController.swift */; };
 		DB164AEE1BBBFC500040949D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB164AEC1BBBFC500040949D /* Main.storyboard */; };
 		DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB164AEF1BBBFC500040949D /* RoutR.xcdatamodeld */; };
 		DB164AF31BBBFC500040949D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB164AF21BBBFC500040949D /* Assets.xcassets */; };
 		DB164AF61BBBFC500040949D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB164AF41BBBFC500040949D /* LaunchScreen.storyboard */; };
 		DB164B011BBBFC500040949D /* RoutRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B001BBBFC500040949D /* RoutRTests.swift */; };
 		DB164B0C1BBBFC500040949D /* RoutRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B0B1BBBFC500040949D /* RoutRUITests.swift */; };
+		DB164B1D1BBC06120040949D /* Stop+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B191BBC06120040949D /* Stop+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		DB164B1E1BBC06120040949D /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B1A1BBC06120040949D /* Stop.swift */; settings = {ASSET_TAGS = (); }; };
+		DB164B1F1BBC06120040949D /* Route+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B1B1BBC06120040949D /* Route+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		DB164B201BBC06120040949D /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B1C1BBC06120040949D /* Route.swift */; settings = {ASSET_TAGS = (); }; };
+		DB164B231BBC0A7C0040949D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B221BBC0A7C0040949D /* RootViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +41,6 @@
 /* Begin PBXFileReference section */
 		DB164AE51BBBFC500040949D /* RoutR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoutR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB164AE81BBBFC500040949D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DB164AEA1BBBFC500040949D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DB164AED1BBBFC500040949D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RoutR.xcdatamodel; sourceTree = "<group>"; };
 		DB164AF21BBBFC500040949D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +52,11 @@
 		DB164B071BBBFC500040949D /* RoutRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB164B0B1BBBFC500040949D /* RoutRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutRUITests.swift; sourceTree = "<group>"; };
 		DB164B0D1BBBFC500040949D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB164B191BBC06120040949D /* Stop+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Stop+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DB164B1A1BBC06120040949D /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		DB164B1B1BBC06120040949D /* Route+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DB164B1C1BBC06120040949D /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		DB164B221BBC0A7C0040949D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,7 @@
 		DB164ADC1BBBFC500040949D = {
 			isa = PBXGroup;
 			children = (
+				DB164B211BBC062F0040949D /* RoutREntities */,
 				DB164AE71BBBFC500040949D /* RoutR */,
 				DB164AFF1BBBFC500040949D /* RoutRTests */,
 				DB164B0A1BBBFC500040949D /* RoutRUITests */,
@@ -100,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				DB164AE81BBBFC500040949D /* AppDelegate.swift */,
-				DB164AEA1BBBFC500040949D /* ViewController.swift */,
+				DB164B221BBC0A7C0040949D /* RootViewController.swift */,
 				DB164AEC1BBBFC500040949D /* Main.storyboard */,
 				DB164AF21BBBFC500040949D /* Assets.xcassets */,
 				DB164AF41BBBFC500040949D /* LaunchScreen.storyboard */,
@@ -126,6 +135,17 @@
 				DB164B0D1BBBFC500040949D /* Info.plist */,
 			);
 			path = RoutRUITests;
+			sourceTree = "<group>";
+		};
+		DB164B211BBC062F0040949D /* RoutREntities */ = {
+			isa = PBXGroup;
+			children = (
+				DB164B191BBC06120040949D /* Stop+CoreDataProperties.swift */,
+				DB164B1A1BBC06120040949D /* Stop.swift */,
+				DB164B1B1BBC06120040949D /* Route+CoreDataProperties.swift */,
+				DB164B1C1BBC06120040949D /* Route.swift */,
+			);
+			name = RoutREntities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +282,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */,
-				DB164AEB1BBBFC500040949D /* ViewController.swift in Sources */,
+				DB164B1F1BBC06120040949D /* Route+CoreDataProperties.swift in Sources */,
+				DB164B1D1BBC06120040949D /* Stop+CoreDataProperties.swift in Sources */,
+				DB164B231BBC0A7C0040949D /* RootViewController.swift in Sources */,
+				DB164B1E1BBC06120040949D /* Stop.swift in Sources */,
+				DB164B201BBC06120040949D /* Route.swift in Sources */,
 				DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
