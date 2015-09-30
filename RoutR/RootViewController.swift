@@ -33,6 +33,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         super.viewDidLoad()
         //createStarterRoutes()
         initializeFetchedResultsController()
+        performFetch()
         print("I cant wait to push this project to GitHub")
         print(moc)
         
@@ -83,7 +84,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
 //        }
 //    }
     
-    private func deleteAllRoutes() {
+//    private func deleteAllRoutes() {
 //        
 //        let deleteRequest = NSBatchDeleteRequest(fetchRequest: self.routesFetch)
 //        
@@ -92,7 +93,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
 //        } catch let error as NSError {
 //            // TODO: handle the error
 //        }
-    }
+//    }
     
     
     // MARK: fetched Results controller methods
@@ -109,11 +110,16 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
                         sectionNameKeyPath: "routeName", cacheName: nil) // "rootCache")
         self.frc.delegate = self
         
+
+    }
+    
+    func performFetch() {
         do {
             try self.frc.performFetch()
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
+        
     }
     
     
@@ -189,7 +195,13 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         let route = self.frc.objectAtIndexPath(indexPath) as! Route
         // Populate cell from the NSManagedObject instance
         cell.textLabel?.text = route.routeName
-        cell.detailTextLabel?.text = "\(route.company!) @ \(route.created!)"
+        // http://www.globalnerdy.com/2015/01/26/how-to-work-with-dates-and-times-in-swift-part-one/
+        let formatter = NSDateFormatter()
+        //formatter.stringFromDate(route.created!)
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        
+        cell.detailTextLabel?.text = "\(route.company!) @ \(formatter.stringFromDate(route.created!))"
         print("Object for configuration: \(route)")
     }
     
@@ -201,25 +213,27 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         return cell
     }
 
-    /*
+
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        return false
     }
-    */
 
-    /*
+
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
+            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            
+        }
+        //else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        //}
     }
-    */
+
 
     /*
     // Override to support rearranging the table view.
@@ -245,5 +259,20 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    
+    @IBAction func unwindToRouteTable(sender: UIStoryboardSegue) {
+        
+        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController, route = sourceViewController.routeDict {
+            saveRoute(route: route)
+            //self.tableView.reloadData()
+        }
+        
+
+        
+    }
+    
+
 
 }
