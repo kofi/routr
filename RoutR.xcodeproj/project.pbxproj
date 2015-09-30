@@ -1,0 +1,526 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164AE81BBBFC500040949D /* AppDelegate.swift */; };
+		DB164AEB1BBBFC500040949D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164AEA1BBBFC500040949D /* ViewController.swift */; };
+		DB164AEE1BBBFC500040949D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB164AEC1BBBFC500040949D /* Main.storyboard */; };
+		DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB164AEF1BBBFC500040949D /* RoutR.xcdatamodeld */; };
+		DB164AF31BBBFC500040949D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB164AF21BBBFC500040949D /* Assets.xcassets */; };
+		DB164AF61BBBFC500040949D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB164AF41BBBFC500040949D /* LaunchScreen.storyboard */; };
+		DB164B011BBBFC500040949D /* RoutRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B001BBBFC500040949D /* RoutRTests.swift */; };
+		DB164B0C1BBBFC500040949D /* RoutRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B0B1BBBFC500040949D /* RoutRUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DB164AFD1BBBFC500040949D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB164ADD1BBBFC500040949D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB164AE41BBBFC500040949D;
+			remoteInfo = RoutR;
+		};
+		DB164B081BBBFC500040949D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB164ADD1BBBFC500040949D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB164AE41BBBFC500040949D;
+			remoteInfo = RoutR;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DB164AE51BBBFC500040949D /* RoutR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoutR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB164AE81BBBFC500040949D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB164AEA1BBBFC500040949D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB164AED1BBBFC500040949D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RoutR.xcdatamodel; sourceTree = "<group>"; };
+		DB164AF21BBBFC500040949D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB164AF51BBBFC500040949D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DB164AF71BBBFC500040949D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB164AFC1BBBFC500040949D /* RoutRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB164B001BBBFC500040949D /* RoutRTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutRTests.swift; sourceTree = "<group>"; };
+		DB164B021BBBFC500040949D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB164B071BBBFC500040949D /* RoutRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB164B0B1BBBFC500040949D /* RoutRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutRUITests.swift; sourceTree = "<group>"; };
+		DB164B0D1BBBFC500040949D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB164AE21BBBFC500040949D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164AF91BBBFC500040949D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164B041BBBFC500040949D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB164ADC1BBBFC500040949D = {
+			isa = PBXGroup;
+			children = (
+				DB164AE71BBBFC500040949D /* RoutR */,
+				DB164AFF1BBBFC500040949D /* RoutRTests */,
+				DB164B0A1BBBFC500040949D /* RoutRUITests */,
+				DB164AE61BBBFC500040949D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB164AE61BBBFC500040949D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB164AE51BBBFC500040949D /* RoutR.app */,
+				DB164AFC1BBBFC500040949D /* RoutRTests.xctest */,
+				DB164B071BBBFC500040949D /* RoutRUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB164AE71BBBFC500040949D /* RoutR */ = {
+			isa = PBXGroup;
+			children = (
+				DB164AE81BBBFC500040949D /* AppDelegate.swift */,
+				DB164AEA1BBBFC500040949D /* ViewController.swift */,
+				DB164AEC1BBBFC500040949D /* Main.storyboard */,
+				DB164AF21BBBFC500040949D /* Assets.xcassets */,
+				DB164AF41BBBFC500040949D /* LaunchScreen.storyboard */,
+				DB164AF71BBBFC500040949D /* Info.plist */,
+				DB164AEF1BBBFC500040949D /* RoutR.xcdatamodeld */,
+			);
+			path = RoutR;
+			sourceTree = "<group>";
+		};
+		DB164AFF1BBBFC500040949D /* RoutRTests */ = {
+			isa = PBXGroup;
+			children = (
+				DB164B001BBBFC500040949D /* RoutRTests.swift */,
+				DB164B021BBBFC500040949D /* Info.plist */,
+			);
+			path = RoutRTests;
+			sourceTree = "<group>";
+		};
+		DB164B0A1BBBFC500040949D /* RoutRUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DB164B0B1BBBFC500040949D /* RoutRUITests.swift */,
+				DB164B0D1BBBFC500040949D /* Info.plist */,
+			);
+			path = RoutRUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB164AE41BBBFC500040949D /* RoutR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB164B101BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutR" */;
+			buildPhases = (
+				DB164AE11BBBFC500040949D /* Sources */,
+				DB164AE21BBBFC500040949D /* Frameworks */,
+				DB164AE31BBBFC500040949D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RoutR;
+			productName = RoutR;
+			productReference = DB164AE51BBBFC500040949D /* RoutR.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DB164AFB1BBBFC500040949D /* RoutRTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB164B131BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRTests" */;
+			buildPhases = (
+				DB164AF81BBBFC500040949D /* Sources */,
+				DB164AF91BBBFC500040949D /* Frameworks */,
+				DB164AFA1BBBFC500040949D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB164AFE1BBBFC500040949D /* PBXTargetDependency */,
+			);
+			name = RoutRTests;
+			productName = RoutRTests;
+			productReference = DB164AFC1BBBFC500040949D /* RoutRTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DB164B061BBBFC500040949D /* RoutRUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB164B161BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRUITests" */;
+			buildPhases = (
+				DB164B031BBBFC500040949D /* Sources */,
+				DB164B041BBBFC500040949D /* Frameworks */,
+				DB164B051BBBFC500040949D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB164B091BBBFC500040949D /* PBXTargetDependency */,
+			);
+			name = RoutRUITests;
+			productName = RoutRUITests;
+			productReference = DB164B071BBBFC500040949D /* RoutRUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB164ADD1BBBFC500040949D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = 38atkins;
+				TargetAttributes = {
+					DB164AE41BBBFC500040949D = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = P52G9P2V5C;
+					};
+					DB164AFB1BBBFC500040949D = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = P52G9P2V5C;
+						TestTargetID = DB164AE41BBBFC500040949D;
+					};
+					DB164B061BBBFC500040949D = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = P52G9P2V5C;
+						TestTargetID = DB164AE41BBBFC500040949D;
+					};
+				};
+			};
+			buildConfigurationList = DB164AE01BBBFC500040949D /* Build configuration list for PBXProject "RoutR" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB164ADC1BBBFC500040949D;
+			productRefGroup = DB164AE61BBBFC500040949D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB164AE41BBBFC500040949D /* RoutR */,
+				DB164AFB1BBBFC500040949D /* RoutRTests */,
+				DB164B061BBBFC500040949D /* RoutRUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB164AE31BBBFC500040949D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB164AF61BBBFC500040949D /* LaunchScreen.storyboard in Resources */,
+				DB164AF31BBBFC500040949D /* Assets.xcassets in Resources */,
+				DB164AEE1BBBFC500040949D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164AFA1BBBFC500040949D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164B051BBBFC500040949D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB164AE11BBBFC500040949D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */,
+				DB164AEB1BBBFC500040949D /* ViewController.swift in Sources */,
+				DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164AF81BBBFC500040949D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB164B011BBBFC500040949D /* RoutRTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB164B031BBBFC500040949D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB164B0C1BBBFC500040949D /* RoutRUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DB164AFE1BBBFC500040949D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB164AE41BBBFC500040949D /* RoutR */;
+			targetProxy = DB164AFD1BBBFC500040949D /* PBXContainerItemProxy */;
+		};
+		DB164B091BBBFC500040949D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB164AE41BBBFC500040949D /* RoutR */;
+			targetProxy = DB164B081BBBFC500040949D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DB164AEC1BBBFC500040949D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB164AED1BBBFC500040949D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DB164AF41BBBFC500040949D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB164AF51BBBFC500040949D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB164B0E1BBBFC500040949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB164B0F1BBBFC500040949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB164B111BBBFC500040949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RoutR/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DB164B121BBBFC500040949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RoutR/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DB164B141BBBFC500040949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RoutRTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutRTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoutR.app/RoutR";
+			};
+			name = Debug;
+		};
+		DB164B151BBBFC500040949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RoutRTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutRTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoutR.app/RoutR";
+			};
+			name = Release;
+		};
+		DB164B171BBBFC500040949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RoutRUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = RoutR;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DB164B181BBBFC500040949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RoutRUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.community7.israel.RoutRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = RoutR;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB164AE01BBBFC500040949D /* Build configuration list for PBXProject "RoutR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB164B0E1BBBFC500040949D /* Debug */,
+				DB164B0F1BBBFC500040949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB164B101BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB164B111BBBFC500040949D /* Debug */,
+				DB164B121BBBFC500040949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DB164B131BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB164B141BBBFC500040949D /* Debug */,
+				DB164B151BBBFC500040949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DB164B161BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB164B171BBBFC500040949D /* Debug */,
+				DB164B181BBBFC500040949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DB164AEF1BBBFC500040949D /* RoutR.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */,
+			);
+			currentVersion = DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */;
+			path = RoutR.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DB164ADD1BBBFC500040949D /* Project object */;
+}
