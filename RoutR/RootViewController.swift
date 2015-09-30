@@ -73,7 +73,19 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         } catch let error as NSError {
             print("Could not save \(error.localizedDescription)")
         }
-        
+    }
+    
+    private func deleteRouteFromIndex(indexPath: NSIndexPath) {
+        let managedObject:NSManagedObject = frc.objectAtIndexPath(indexPath) as! NSManagedObject
+        do {
+            moc.deleteObject(managedObject)
+            try moc.save()
+            print("successfully deleted route")
+
+        } catch let error as NSError {
+            print("Could not save \(error.localizedDescription)")
+        }
+
     }
     
 //    private func fetchCurrentRoutes() {
@@ -217,7 +229,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return false
+        return true
     }
 
 
@@ -226,7 +238,8 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         if editingStyle == .Delete {
             // Delete the row from the data source
             //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            
+            // remove the deleted item from the model
+            self.deleteRouteFromIndex(indexPath)
             
         }
         //else if editingStyle == .Insert {
