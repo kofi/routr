@@ -20,6 +20,8 @@
 		DB164B201BBC06120040949D /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B1C1BBC06120040949D /* Route.swift */; settings = {ASSET_TAGS = (); }; };
 		DB164B231BBC0A7C0040949D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B221BBC0A7C0040949D /* RootViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		DB164B251BBC417C0040949D /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB164B241BBC417C0040949D /* RouteDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DB78B2201BBD5C9C0036A179 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78B21F1BBD5C9C0036A179 /* RouteTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		DB78B2221BBD7FAF0036A179 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78B2211BBD7FAF0036A179 /* DataHelper.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		DB164B1C1BBC06120040949D /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		DB164B221BBC0A7C0040949D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		DB164B241BBC417C0040949D /* RouteDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
+		DB78B21F1BBD5C9C0036A179 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
+		DB78B2211BBD7FAF0036A179 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				DB164AE81BBBFC500040949D /* AppDelegate.swift */,
+				DB78B21F1BBD5C9C0036A179 /* RouteTableViewCell.swift */,
 				DB164AEC1BBBFC500040949D /* Main.storyboard */,
 				DB164B221BBC0A7C0040949D /* RootViewController.swift */,
 				DB164B241BBC417C0040949D /* RouteDetailViewController.swift */,
@@ -147,6 +152,7 @@
 				DB164B1A1BBC06120040949D /* Stop.swift */,
 				DB164B1B1BBC06120040949D /* Route+CoreDataProperties.swift */,
 				DB164B1C1BBC06120040949D /* Route.swift */,
+				DB78B2211BBD7FAF0036A179 /* DataHelper.swift */,
 			);
 			name = RoutREntities;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */,
+				DB78B2201BBD5C9C0036A179 /* RouteTableViewCell.swift in Sources */,
 				DB164B1F1BBC06120040949D /* Route+CoreDataProperties.swift in Sources */,
 				DB164B1D1BBC06120040949D /* Stop+CoreDataProperties.swift in Sources */,
 				DB164B251BBC417C0040949D /* RouteDetailViewController.swift in Sources */,
@@ -292,6 +299,7 @@
 				DB164B1E1BBC06120040949D /* Stop.swift in Sources */,
 				DB164B201BBC06120040949D /* Route.swift in Sources */,
 				DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */,
+				DB78B2221BBD7FAF0036A179 /* DataHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +526,7 @@
 				DB164B121BBBFC500040949D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB164B131BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +535,7 @@
 				DB164B151BBBFC500040949D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB164B161BBBFC500040949D /* Build configuration list for PBXNativeTarget "RoutRUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +544,7 @@
 				DB164B181BBBFC500040949D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

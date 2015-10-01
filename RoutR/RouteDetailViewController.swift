@@ -32,6 +32,7 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         companyLabel.delegate = self
         
         if let route = route {
+            navigationItem.title = route.routeName
             routeNameLabel.text = route.routeName
             companyLabel.text = route.company
         }
@@ -72,7 +73,9 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         let isCompanyLabel = (companyLabel.text ) ?? ""
         saveButton.enabled = ( !isRouteNameLabel.isEmpty && !isCompanyLabel.isEmpty)
     }
+
     
+    // MARK - Route Editing
     
     func editRoute() {
         

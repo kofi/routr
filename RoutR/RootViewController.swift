@@ -12,6 +12,8 @@ import CoreData
 class RootViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     private let routeCell = "Routes"
     private let stopCell = "Cell"
+
+    //public var moc: NSManagedObjectContext!
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let routesDict: [[String:String]]  = [
@@ -173,19 +175,26 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     // MARK: fetched Results controller methods
     func initializeFetchedResultsController() {
+
+        let request = itemFetchRequest()
+        self.frc = NSFetchedResultsController(
+                        fetchRequest: request, managedObjectContext: moc,
+                        // set this to routeName so that creates sections or set to nil
+                        // if not nil then we can display header with TableView:
+                        sectionNameKeyPath: "routeName", // "routeName",
+                        cacheName: nil) // "rootCache")
+        self.frc.delegate = self
+
+    }
+    
+    func itemFetchRequest() -> NSFetchRequest {
         let request = NSFetchRequest(entityName: "Route")
         //let routeNameSort = NSSortDescriptor(key: "department.name", ascending: true)
         let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
         let createdSort = NSSortDescriptor(key: "created", ascending: false)
         request.sortDescriptors = [createdSort, routeNameSort]  //departmentSort,
         
-        //let moc = self.dataController.managedObjectContext
-        self.frc = NSFetchedResultsController(
-                        fetchRequest: request, managedObjectContext: moc,
-                        sectionNameKeyPath: "routeName", cacheName: nil) // "rootCache")
-        self.frc.delegate = self
-        
-
+        return request
     }
     
     func performFetch() {
@@ -197,6 +206,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         
     }
     
+    // MARK: - Auto Table Update from CoreData
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
@@ -226,7 +236,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
                 case .Delete:
                     self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 case .Update:
-                    self.configureCell(self.tableView.cellForRowAtIndexPath(indexPath!)!, indexPath: indexPath!)
+                    self.configureCell(self.tableView.cellForRowAtIndexPath(indexPath!)! as! RouteTableViewCell, indexPath: indexPath!)
                 case .Move:
                     self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                     self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
@@ -249,13 +259,14 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        // http://www.andrewcbancroft.com/2015/03/05/displaying-data-with-nsfetchedresultscontroller-and-swift/
         return self.frc.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         //return 0 // 1currentRoutes.count
-        
+        // http://www.andypierz.com/blog/2014/11/9/basic-drag-and-drop-uitableviews-using-swift-and-core-data
         if self.frc.sections == nil {
             return 0
         }
@@ -263,32 +274,60 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         let sections: [NSFetchedResultsSectionInfo] = self.frc.sections!
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
-        
-    }
 
+    }
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("routeCell", forIndexPath: indexPath) as! RouteTableViewCell //UITableViewCell
+        
+        //cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
+        
+        //let route = routes[indexPath.row] as! Route
+        self.configureCell(cell, indexPath: indexPath)
+        return cell
+    }
     
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
+    func configureCell(cell: RouteTableViewCell, indexPath: NSIndexPath) {
         let route = self.frc.objectAtIndexPath(indexPath) as! Route
         // Populate cell from the NSManagedObject instance
-        cell.textLabel?.text = route.routeName
+        //cell.textLabel?.text = route.routeName
+        cell.routeNameLabel!.text = "\(route.routeName!)"
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        print("Section: \(section)  Row: \(row)")
+        print("\(indexPath.row)" )
+        if let sections = self.frc.sections {
+            let sectionsCount = sections.count
+            //let thisSectionCount = self.tableView.numberOfRowsInSection(section)
+            if sectionsCount == 1 {
+                cell.routeIndexLabel!.text = "\(indexPath.row + 1)"
+            } else {
+                cell.routeIndexLabel!.text =  "\(indexPath.section + 1)"  //"\(indexPath.section * (thisSectionCount-1) + indexPath.row+1)"
+            }
+        }
+        //cell.routeIndexLabel.text = "\(route.company!)"
+        cell.routeStopCountLabel!.text = "\(route.stops!.count)"
         // http://www.globalnerdy.com/2015/01/26/how-to-work-with-dates-and-times-in-swift-part-one/
         let formatter = NSDateFormatter()
         //formatter.stringFromDate(route.created!)
         formatter.dateStyle = .MediumStyle
         formatter.timeStyle = .ShortStyle
         
-        cell.detailTextLabel?.text = "\(route.company!) @ \(formatter.stringFromDate(route.created!))"
-        print("Object for configuration: \(route)")
+        cell.routeCompanyLabel!.text = "\(route.company!) @ \(formatter.stringFromDate(route.created!))"
+        //print("Object for configuration: \(route)")
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("routeCell", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        // do we ha
+        if let sections = self.frc.sections {
+            let currentSection = sections[section]
+            return currentSection.name
+        }
         
-        //let route = routes[indexPath.row] as! Route
-        self.configureCell(cell, indexPath: indexPath)
-        return cell
+        return nil
     }
+
 
 
     // Override to support conditional editing of the table view.
@@ -311,7 +350,11 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         //}
     }
-
+    
+//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        <#code#>
+//    }
+//    
 
     /*
     // Override to support rearranging the table view.
