@@ -11,10 +11,12 @@ import CoreData
 
 class RouteDetailViewController: UIViewController, UITextFieldDelegate {
     
-    
-    //let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    let isEdit: Bool = false
+    var isEdit: Bool = false
     var routeDict: [String: String]?
+    var route: Route?
+    //var index: NSIndexPath?
+    var moc =  (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    //: NSManagedObjectContext?
     
     @IBOutlet weak var routeNameLabel: UITextField!
     @IBOutlet weak var companyLabel: UITextField!
@@ -28,6 +30,11 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         routeNameLabel.delegate = self
         companyLabel.delegate = self
+        
+        if let route = route {
+            routeNameLabel.text = route.routeName
+            companyLabel.text = route.company
+        }
         
         checkValidRouteInfo()   
     }
@@ -66,13 +73,34 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         saveButton.enabled = ( !isRouteNameLabel.isEmpty && !isCompanyLabel.isEmpty)
     }
     
-
     
-
+    func editRoute() {
+        
+        let routeName = routeNameLabel.text!
+        let company = companyLabel.text!
+        
+        route?.company = company
+        route?.routeName = routeName
+        do {
+            try moc.save()
+            print("saved route \(route)")
+            
+        } catch let error as NSError {
+            print("Could not save \(error.localizedDescription)")
+        }
+        
+    }
+    
 
     // MARK: - Navigation
     @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+        let isPresentingInAddRouteMode = presentingViewController is UINavigationController
+        if isPresentingInAddRouteMode {
+            dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            //dismissViewControllerAnimated(true, completion: nil)
+            navigationController!.popViewControllerAnimated(true)
+        }
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -83,7 +111,15 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         if saveButton === sender {
             let routeName = routeNameLabel.text!
             let company = companyLabel.text!
+            
             self.routeDict = ["routeName": routeName, "company": company ]
+            
+            if self.isEdit == false {
+            } else {
+                print("\(routeDict)")
+                editRoute()
+                self.routeDict = ["routeName": "", "company": "" ]
+            }
         }
         
     }

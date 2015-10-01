@@ -12,6 +12,7 @@ import CoreData
 class RootViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     private let routeCell = "Routes"
     private let stopCell = "Cell"
+    
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let routesDict: [[String:String]]  = [
             [ "routeName": "Mondays", "company": "Nizhoni"],
@@ -26,16 +27,15 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     var frc: NSFetchedResultsController!
     var routesFetch = NSFetchRequest(entityName: "Route")
     //var routes = [Route]()
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem()
         //createStarterRoutes()
         initializeFetchedResultsController()
         performFetch()
-        print("I cant wait to push this project to GitHub")
-        print(moc)
+        //print("I cant wait to push this project to GitHub")
+        //print(moc)
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -49,17 +49,17 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     private func createStarterRoutes() {
         //let entityDescription = NSEntityDescription.entityForName("Route", inManagedObjectContext: moc)
         
-        for route in routesDict {
+        for routeDict in routesDict {
             
-            print(route)
-            saveRoute(route: route)
+            //print(routeDict)
+            saveRouteDict(routeDict: routeDict)
         }
         
         //routes.append(route1)
         
     }
     
-    private func saveRoute(route routeDict : [String: String]) {
+    private func saveRouteDict(routeDict routeDict : [String: String]) {
         let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
         //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         route.company = routeDict["company"]
@@ -75,6 +75,24 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         }
     }
     
+    private func saveRoute(route route : Route) {
+        let routeSave = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
+
+        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+        routeSave.company = route.company!
+        routeSave.created = NSDate()
+        routeSave.routeName = route.routeName!
+        
+        do {
+            try moc.save()
+            print("saved route \(routeSave)")
+            
+        } catch let error as NSError {
+            print("Could not save \(error.localizedDescription)")
+        }
+    }
+    
+    
     private func deleteRouteFromIndex(indexPath: NSIndexPath) {
         let managedObject:NSManagedObject = frc.objectAtIndexPath(indexPath) as! NSManagedObject
         do {
@@ -86,6 +104,51 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
             print("Could not save \(error.localizedDescription)")
         }
 
+    }
+    
+    private func updateRouteAtIndex(indexPath: NSIndexPath, routeDict : [String : String]) {
+        
+        let selectedRoute =  frc.objectAtIndexPath(indexPath) as! Route
+        let moID = selectedRoute.objectID
+        selectedRoute.routeName = routeDict["routeName"]
+        selectedRoute.company   = routeDict["company"]
+        
+//        let route =  moc.objectWithID(moID) as! Route
+//        route.routeName = routeDict["routeName"]
+//        route.company   = routeDict["company"]
+//        do {
+//            try moc.save()
+//            print("saved route \(route)")
+//            
+//        } catch let error as NSError {
+//            print("Could not save \(error.localizedDescription)")
+//        }
+        
+        do {
+    
+            let fetchResults = try moc.executeFetchRequest(routesFetch) as! [Route]
+
+            let thisRoute = fetchResults[indexPath.row]
+            let thisMOID = thisRoute.objectID
+            print("\(moID) \(thisMOID)")
+            thisRoute.routeName = routeDict["routeName"]
+            thisRoute.company   = routeDict["company"]
+            
+    
+            do {
+                try moc.save()
+                print("saved route \(thisRoute)")
+    
+            } catch let error as NSError {
+                print("Could not save \(error.localizedDescription)")
+            }
+            
+        } catch let error as NSError {
+            print("could not fetch results \(error.localizedDescription)")
+        }
+        
+
+        
     }
     
 //    private func fetchCurrentRoutes() {
@@ -141,31 +204,33 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
             atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        switch type {
-        case .Insert:
-            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Delete:
-            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Move:
-            break
-        case .Update:
-            break
-        }
+                switch type {
+                case .Insert:
+                    self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+                case .Delete:
+                    self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+                case .Move:
+                    break
+                case .Update:
+                    break
+                }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-            switch type {
-            case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Update:
-                self.configureCell(self.tableView.cellForRowAtIndexPath(indexPath!)!, indexPath: indexPath!)
-            case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            }
+            atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType,
+            newIndexPath: NSIndexPath?) {
+                
+                switch type {
+                case .Insert:
+                    self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                case .Delete:
+                    self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                case .Update:
+                    self.configureCell(self.tableView.cellForRowAtIndexPath(indexPath!)!, indexPath: indexPath!)
+                case .Move:
+                    self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                    self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                }
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -263,29 +328,64 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowDetail" {
+            let routeDetailViewController = segue.destinationViewController as! RouteDetailViewController
+            if let selectedRouteCell = sender as? UITableViewCell {
+                let indexPath = self.tableView.indexPathForCell(selectedRouteCell)!
+                let selectedRoute =  frc.objectAtIndexPath(indexPath) as! Route
+                routeDetailViewController.routeDict = ["routeName": selectedRoute.routeName!, "company": selectedRoute.company!]
+                routeDetailViewController.route = selectedRoute
+                routeDetailViewController.isEdit = true
+                //routeDetailViewController.index = indexPath
+                
+            }
+        }
+        else if segue.identifier == "AddItem" {
+            print("adding a new route")
+            
+        }
+        
     }
-    */
-    
     
     
     @IBAction func unwindToRouteTable(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController, route = sourceViewController.routeDict {
-            saveRoute(route: route)
-            //self.tableView.reloadData()
+        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController,
+            routeDict = sourceViewController.routeDict {
+                //saveRouteDict(routeDict: routeDict)
+                if  routeDict["routeName"] != "" { //let selectedIndexPath =
+                   saveRouteDict(routeDict: routeDict)
+                }
+                //self.tableView.indexPathForSelectedRow {
+                
+                //print("\(selectedIndexPath)")
+                //print("Saved the entry")
+                //                   // updateRouteAtIndex(selectedIndexPath, routeDict: routeDict)
+                //                    route.routeName = routeDict["routeName"]
+                //                    route.company = routeDict["company"]
+                //
+                //                    do {
+                //                        try moc.save()
+                //                        print("saved route \(route)")
+                //
+                //                    } catch let error as NSError {
+                //                        print("Could not save \(error.localizedDescription)")
+                //                    }
+                //                    
+                //                    
+                // } else {
+                
+                //saveRoute(route: route)
+                //self.tableView.reloadData()
         }
         
-
-        
     }
-    
-
 
 }
