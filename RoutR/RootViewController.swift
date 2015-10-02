@@ -48,18 +48,16 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     
-    private func createStarterRoutes() {
-        //let entityDescription = NSEntityDescription.entityForName("Route", inManagedObjectContext: moc)
-        
-        for routeDict in routesDict {
-            
-            //print(routeDict)
-            saveRouteDict(routeDict: routeDict)
-        }
-        
-        //routes.append(route1)
-        
-    }
+//    private func createStarterRoutes() {
+//        //let entityDescription = NSEntityDescription.entityForName("Route", inManagedObjectContext: moc)
+//        
+//        for routeDict in routesDict {
+//            
+//            //print(routeDict)
+//            saveRouteDict(routeDict: routeDict)
+//        }
+//        
+//    }
     
     private func saveRouteDict(routeDict routeDict : [String: String]) {
         let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
@@ -115,17 +113,6 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         selectedRoute.routeName = routeDict["routeName"]
         selectedRoute.company   = routeDict["company"]
         
-//        let route =  moc.objectWithID(moID) as! Route
-//        route.routeName = routeDict["routeName"]
-//        route.company   = routeDict["company"]
-//        do {
-//            try moc.save()
-//            print("saved route \(route)")
-//            
-//        } catch let error as NSError {
-//            print("Could not save \(error.localizedDescription)")
-//        }
-        
         do {
     
             let fetchResults = try moc.executeFetchRequest(routesFetch) as! [Route]
@@ -153,27 +140,9 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         
     }
     
-//    private func fetchCurrentRoutes() {
-//        do {
-//            routes = try moc.executeFetchRequest(routesFetch) as! [Route]
-//        } catch {
-//            fatalError("Failed to fetch current routes: \(error)")
-//        }
-//    }
-    
-//    private func deleteAllRoutes() {
-//        
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: self.routesFetch)
-//        
-//        do {
-//            try myPersistentStoreCoordinator.executeRequest(deleteRequest, withContext: moc)
-//        } catch let error as NSError {
-//            // TODO: handle the error
-//        }
-//    }
-    
     
     // MARK: fetched Results controller methods
+    
     func initializeFetchedResultsController() {
 
         let request = itemFetchRequest()
@@ -203,7 +172,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
-        
+
     }
     
     // MARK: - Auto Table Update from CoreData
@@ -293,10 +262,10 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         //cell.textLabel?.text = route.routeName
         cell.routeNameLabel!.text = "\(route.routeName!)"
         
-        let section = indexPath.section
-        let row = indexPath.row
-        print("Section: \(section)  Row: \(row)")
-        print("\(indexPath.row)" )
+        //let section = indexPath.section
+        //let row = indexPath.row
+        //print("Section: \(section)  Row: \(row)")
+        //print("\(indexPath.row)" )
         if let sections = self.frc.sections {
             let sectionsCount = sections.count
             //let thisSectionCount = self.tableView.numberOfRowsInSection(section)
@@ -350,26 +319,6 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         //}
     }
-    
-//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-//        <#code#>
-//    }
-//    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
 
     // MARK: - Navigation
@@ -378,14 +327,16 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        print("\(segue.identifier)")
         if segue.identifier == "ShowDetail" {
-            let routeDetailViewController = segue.destinationViewController as! RouteDetailViewController
+            let routeDetailNavigationController =  segue.destinationViewController as! UINavigationController
+            let routeDetailViewController = routeDetailNavigationController.viewControllers[0] as! RouteInfoTableViewController
             if let selectedRouteCell = sender as? UITableViewCell {
                 let indexPath = self.tableView.indexPathForCell(selectedRouteCell)!
                 let selectedRoute =  frc.objectAtIndexPath(indexPath) as! Route
-                routeDetailViewController.routeDict = ["routeName": selectedRoute.routeName!, "company": selectedRoute.company!]
+                //routeDetailViewController.routeDict = ["routeName": selectedRoute.routeName!, "company": selectedRoute.company!]
                 routeDetailViewController.route = selectedRoute
-                routeDetailViewController.isEdit = true
+                //routeDetailViewController.isEdit = true
                 //routeDetailViewController.index = indexPath
                 
             }
@@ -396,6 +347,28 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         }
         
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        if segue.identifier == "ShowDetail" {
+//            let routeDetailViewController = segue.destinationViewController as! RouteDetailViewController
+//            if let selectedRouteCell = sender as? UITableViewCell {
+//                let indexPath = self.tableView.indexPathForCell(selectedRouteCell)!
+//                let selectedRoute =  frc.objectAtIndexPath(indexPath) as! Route
+//                routeDetailViewController.routeDict = ["routeName": selectedRoute.routeName!, "company": selectedRoute.company!]
+//                routeDetailViewController.route = selectedRoute
+//                routeDetailViewController.isEdit = true
+//                //routeDetailViewController.index = indexPath
+//                
+//            }
+//        }
+//        else if segue.identifier == "AddItem" {
+//            print("adding a new route")
+//            
+//        }
+//        
+//    }
     
     
     @IBAction func unwindToRouteTable(sender: UIStoryboardSegue) {
