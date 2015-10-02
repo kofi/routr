@@ -27,7 +27,7 @@ public class DataHelper {
             (firstName: "Jane", lastName: "Mael", street: "APPLETON ST", houseNumber: "174", town: "Cambridge", state: "Massachusetts", zipCode: "02138-1331"),
             (firstName: "David", lastName: "Johnson", street: "Ash ST.", houseNumber: "31", town: "Cambridge", state: "Massachusetts", zipCode: "02138"),
             (firstName: "Shirley", lastName: "Chisolm", street: "Aberdeen CT.", houseNumber: "1", town: "Cambridge", state: "Massachusetts", zipCode: "02138"),
-            (firstName: "Jack", lastName: "Rudolph", street: "AGASSIZ St.", houseNumber: "18", town: "Cambridge", state: "Massachusetts", zipCode: "02140-2802")
+            (firstName: "Michael", lastName: "Laudrup", street: "AGASSIZ St.", houseNumber: "18", town: "Cambridge", state: "Massachusetts", zipCode: "02140-2802")
         ]
         
         for stop in stops {
@@ -39,6 +39,7 @@ public class DataHelper {
             newStopObject.town = stop.town
             newStopObject.state = stop.state
             newStopObject.zipCode = stop.zipCode
+            newStopObject.country = "US"
         }
         
         do {
@@ -54,34 +55,25 @@ public class DataHelper {
         let allStops = (try! context.executeFetchRequest(stopsFetchRequest)) as! [Stop]
         //print("\(allStops)")
         
-        let stop1 = allStops.filter({(c: Stop) -> Bool in
-            return (c.firstName == "John") && (c.lastName == "Doe")
-        }).first
-        let stop2 = allStops.filter({(c: Stop) -> Bool in
-            return (c.firstName == "Jane") && (c.lastName == "Mael")
-        }).first
-        let stop3 = allStops.filter({(c: Stop) -> Bool in
-            return (c.firstName == "David") && (c.lastName == "Johnson")
-        }).first
-        let stop4 = allStops.filter({(c: Stop) -> Bool in
-            return (c.firstName == "Shirley") && (c.lastName == "Chisolm")
-        }).first
-        let stop5 = allStops.filter({(c: Stop) -> Bool in
-            return (c.firstName == "Jack") && (c.lastName == "Rudolph")
-        }).first
+//        let stop1 = allStops.filter({(c: Stop) -> Bool in
+//            return (c.firstName == "John") && (c.lastName == "Doe")
+//        }).first
+        //        let stop1 = allStops.filter({(c: Stop) -> Bool in
+        //            return (c.firstName == "John") && (c.lastName == "Doe")
+        //        }).first
         
-//        let stop1 = allStops[0]
-//        let stop2 = allStops[1]
-//        let stop3 = allStops[2]
-//        let stop4 = allStops[3]
-//        let stop5 = allStops[4]
+        let stop1 = allStops[0]
+        let stop2 = allStops[1]
+        let stop3 = allStops[2]
+        let stop4 = allStops[3]
+        let stop5 = allStops[4]
         
         let routes = [
-            (routeName: "Mondays", company: "St. Elizabeths", stops: NSSet(array: [stop1!, stop2!])),
-            (routeName: "Wednesdays", company: "St. Judes", stops: NSSet(array: [stop2!, stop3!, stop4!])),
-            (routeName: "Tuesdays", company: "St. Mary's", stops: NSSet(array: [stop5!])),
-            (routeName: "Sundays", company: "Kindred", stops: NSSet(array: [stop1!, stop2!, stop4!, stop5!])),
-            (routeName: "Fridays", company: "Homeway", stops: NSSet(array: [stop1!]))
+            (routeName: "Mondays", company: "St. Elizabeths", stops: NSSet(array: [stop1, stop2])),
+            (routeName: "Wednesdays", company: "St. Judes", stops: NSSet(array: [stop2, stop3, stop4])),
+            (routeName: "Tuesdays", company: "St. Mary's", stops: NSSet(array: [stop5])),
+            (routeName: "Sundays", company: "Kindred", stops: NSSet(array: [stop1, stop2, stop4, stop5])),
+            (routeName: "Fridays", company: "Homeway", stops: NSSet(array: [stop1]))
         ]
         //print("\(routes)")
         

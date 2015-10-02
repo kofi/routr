@@ -89,9 +89,25 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
             print("saved route \(route)")
             
         } catch let error as NSError {
-            print("Could not save \(error.localizedDescription)")
+            print("Could not save edit (root) \(error.localizedDescription)")
         }
         
+    }
+    
+    private func saveRouteFromDict(routeDict routeDict : [String: String]) {
+        let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
+        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+        route.company = routeDict["company"]
+        route.created = NSDate()
+        route.routeName = routeDict["routeName"]
+        
+        do {
+            try moc.save()
+            print("saved route \(route)")
+            
+        } catch let error as NSError {
+            print("Could not save (root) \(error.localizedDescription)")
+        }
     }
     
 
@@ -111,21 +127,28 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         // see https://developer.apple.com/library/prerelease/ios/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson8.html#//apple_ref/doc/uid/TP40015214-CH16-SW1
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        print("RouteDetailViewController: within prepareForseque")
         if saveButton === sender {
             let routeName = routeNameLabel.text!
             let company = companyLabel.text!
-            
             self.routeDict = ["routeName": routeName, "company": company ]
             
             if self.isEdit == false {
+                //self.saveRouteFromDict(routeDict: self.routeDict!)
+                print("RouteDetailViewController: will save")
+                
             } else {
-                print("\(routeDict)")
+                print("RouteDetailViewController: will edit")
                 editRoute()
-                self.routeDict = ["routeName": "", "company": "" ]
+                let routeInfoTableViewController =  segue.destinationViewController as! RouteInfoTableViewController
+                routeInfoTableViewController.route = route
+                //self.routeDict = ["routeName": "", "company": "" ]
             }
         }
+
         
     }
+    
 
 
 }

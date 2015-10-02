@@ -18,7 +18,7 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     var frc: NSFetchedResultsController!
-    var stopsFetch = NSFetchRequest(entityName: "Stop")
+    var stopsFetch = NSFetchRequest() // NSFetchRequest(entityName: "Stop")
     
     var fetchStopResults : [Stop] = []
     
@@ -36,15 +36,20 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         navigationItem.title = self.route!.routeName
         performFetch()
         executeStopFetchResult()
+        //print("\(route)")
 
     }
 
 
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
 
     // MARK: - Table view data source
 
@@ -55,38 +60,22 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-//        if infoSections[section] == "Route"  {
-//            return 1
-//        } else {
-//            return (route!.stops?.count)!
-//        }
-        
-        
-//        if section == 0 {
-//            return 1
-//        }
-//        let sections: [NSFetchedResultsSectionInfo] = self.frc.sections!
-//        let sectionInfo = sections[section]
-//        return sectionInfo.numberOfObjects
-        
         return section == 0 ? 1: (route!.stops?.count)!
-//        let stopsCount = route!.stops?.count
-//        if section == 0 {
-//            return 1
-//        } else {
-//            if stopsCount != nil {
-//                return 0
-//            } else {
-//                return stopsCount!
-//            }
-//        }
-        //return 0
+
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return infoSections[section]
+        if section == 1 {
+            return infoSections[section]
+        }
+        return ""
     }
     
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0.0 : 15
+    }
+    
+
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
@@ -117,26 +106,26 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         formatter.dateStyle = .MediumStyle
         formatter.timeStyle = .ShortStyle
         cell.createdLabel.text = " @ \(formatter.stringFromDate(route!.created!))"
+        cell.totalDistanceLabel.text = "20 mi."
+        cell.totalTimeTable.text = "2.5 hrs"
 
     }
     
     
     func configureSpotsCell(cell cell: RouteStopsTableViewCell, indexPath: NSIndexPath) {
-        print("\(indexPath)")
-        print("\(indexPath.section)")
-        print("\(indexPath.row)")
+//        print("\(indexPath)")
+//        print("\(indexPath.section)")
+//        print("\(indexPath.row)")
+        //print("Configuring SpotsCell")
 //        do {
         
             //let thisStop = fetchResults[indexPath.row]
 
             let stop = self.fetchStopResults[indexPath.row] // stop = self.frc.objectAtIndexPath(indexPath) as? Stop {
-            
-            
-            
-            cell.firstNameLabel.text = "\(stop.firstName!)"
-            cell.lastNameLabel.text = "\(stop.lastName!)"
+            cell.firstNameLabel.text = "\(stop.firstName!) \(stop.lastName!)"
+            //cell.lastNameLabel.text = "\(stop.lastName!)"
             cell.addressLabel.text = "\(stop.houseNumber!) \(stop.street!), \(stop.town!), \(stop.state!), \(stop.zipCode!)"
-            cell.distanceToLabel.text = "5 miles"
+            cell.distanceToLabel.text = "5 mi."
             cell.timeToLabel.text = "10 mins"
             
 //
@@ -149,9 +138,9 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 70
-        } else {
             return 50
+        } else {
+            return 60
         }
     }
 
@@ -204,16 +193,17 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     
     func initializeFetchedResultsController() {
         //http://stackoverflow.com/questions/4217849/core-data-nspredicate-for-many-to-many-relationship-to-many-key-not-allowed
-        let request = itemFetchRequest()
-        request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && ANY route.company =[cd] %@", (route?.routeName)!, (route?.company)!) //argumentArray:[route?.routeName])
+        self.stopsFetch = itemFetchRequest()
+        //request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && ANY route.company =[cd] %@", (route?.routeName)!, (route?.company)!) //argumentArray:[route?.routeName])
+        
         //request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && route.company CONTAINS[cd] %@", (route?.routeName)!, (route?.company)!)
         //[NSPredicate predicateWithFormat:@"phone_number.phone_number like[cd] %@",  @"+972-54*"];
         self.frc = NSFetchedResultsController(
-            fetchRequest: request, managedObjectContext: moc,
+            fetchRequest: self.stopsFetch, managedObjectContext: moc,
             // set this to routeName so that creates sections or set to nil
             // if not nil then we can display header with TableView:
             sectionNameKeyPath: nil, //"routeName", // "routeName",
-            cacheName: nil) // "rootCache")
+            cacheName: "stopsCache")
         self.frc.delegate = self
         
     }
@@ -224,6 +214,9 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
 //        let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
 //        let createdSort = NSSortDescriptor(key: "created", ascending: false)
         request.sortDescriptors = [] //createdSort, routeNameSort]  //departmentSort,
+        request.predicate =  NSPredicate(format:"ANY  route.routeName = %@", (route?.routeName)!)
+        
+        //self.stopsFetch = request
         
         return request
     }
@@ -240,7 +233,7 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     func executeStopFetchResult() {
         do {
             fetchStopResults = try moc.executeFetchRequest(stopsFetch) as! [Stop]
-            print("\(fetchStopResults)")
+            //print("\(fetchStopResults)")
         } catch let error as NSError {
             print("\(error.localizedDescription)")
         }
@@ -286,6 +279,49 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }
+
+    // MARK: segues
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        print("\(segue.identifier) in Route Info")
+        if segue.identifier == "EditRoute" {
+            //let routeDetailNavigationController =  segue.destinationViewController as! UINavigationController
+            let routeDetailViewController = segue.destinationViewController as! RouteDetailViewController
+            
+            routeDetailViewController.routeDict = ["routeName": route!.routeName!, "company": route!.company!]
+            routeDetailViewController.route = route
+            routeDetailViewController.isEdit = true
+            //routeDetailViewController.index = indexPath
+            
+
+        }
+        else if segue.identifier == "AddItem" {
+            print("adding a new route")
+            
+        }
+        
+    }
+    
+    @IBAction func unwindToRouteView(sender: UIStoryboardSegue) {
+        // use the same name as the segue in the RootViewController
+        
+        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController, route  = sourceViewController.route {
+                print("Coming from Route Info Table View Controller")
+            // call reload here so we can refresh any changed Route data
+                self.tableView.reloadData()
+//                self.routeDict = ["routeName": route.routeName!, "company": route.company! ]
+//                editRoute()
+//                self.routeDict = ["routeName": "", "company": "" ]
+//                
+                //sender.destinationViewController = sourceViewController
+        }
+        
+    }
+    
+
+    
+    
 
 
 }

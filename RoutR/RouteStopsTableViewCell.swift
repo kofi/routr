@@ -11,7 +11,7 @@ import UIKit
 class RouteStopsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
+//    @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var distanceToLabel: UILabel!
     @IBOutlet weak var timeToLabel: UILabel!
