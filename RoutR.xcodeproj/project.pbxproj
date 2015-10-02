@@ -69,6 +69,7 @@
 		DB78B2231BBDB10D0036A179 /* RouteDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteDetailTableViewCell.swift; sourceTree = "<group>"; };
 		DB78B2261BBDB1710036A179 /* RouteStopsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteStopsTableViewCell.swift; sourceTree = "<group>"; };
 		DB78B2281BBDB1900036A179 /* RouteInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewController.swift; sourceTree = "<group>"; };
+		DBBE40991BBEFA93007FD260 /* modelWithRouteIndex.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = modelWithRouteIndex.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -572,6 +573,7 @@
 		DB164AEF1BBBFC500040949D /* RoutR.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				DBBE40991BBEFA93007FD260 /* modelWithRouteIndex.xcdatamodel */,
 				DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */,
 			);
 			currentVersion = DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */;

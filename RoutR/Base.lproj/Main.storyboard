@@ -295,7 +295,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Iqf-Sz-0kq">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="uoy-TN-HK7">
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Back" id="uoy-TN-HK7">
                             <connections>
                                 <action selector="cancel:" destination="imK-3a-EO2" id="COm-4b-ZyG"/>
                             </connections>

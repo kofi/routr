@@ -19,6 +19,16 @@ public class DataHelper {
     public func seedDataStore() {
         seedStops()
         seedRoutes()
+        
+//        let stopFetchRequest = NSFetchRequest(entityName: "Stop")
+//        let allstops = (try! context.executeFetchRequest(stopFetchRequest)) as! [Stop]
+//        print("\(allstops)")
+//        let routeFetchRequest = NSFetchRequest(entityName: "Route")
+//        let allroutes = (try! context.executeFetchRequest(routeFetchRequest)) as! [Route]
+//        print("\(allroutes)")
+
+        
+
     }
     
     private func seedStops() {
@@ -41,12 +51,13 @@ public class DataHelper {
             newStopObject.zipCode = stop.zipCode
             newStopObject.country = "US"
         }
-        
         do {
             try context.save()
         } catch _ {
             
         }
+
+
     }
     
     
@@ -58,9 +69,18 @@ public class DataHelper {
 //        let stop1 = allStops.filter({(c: Stop) -> Bool in
 //            return (c.firstName == "John") && (c.lastName == "Doe")
 //        }).first
-        //        let stop1 = allStops.filter({(c: Stop) -> Bool in
-        //            return (c.firstName == "John") && (c.lastName == "Doe")
-        //        }).first
+//        let stop2 = allStops.filter({(c: Stop) -> Bool in
+//            return (c.firstName == "Jane") && (c.lastName == "Mael")
+//        }).first
+//        let stop3 = allStops.filter({(c: Stop) -> Bool in
+//            return (c.firstName == "David") && (c.lastName == "Johnson")
+//        }).first
+//        let stop4 = allStops.filter({(c: Stop) -> Bool in
+//            return (c.firstName == "Shirley") && (c.lastName == "Chisolm")
+//        }).first
+//        let stop5 = allStops.filter({(c: Stop) -> Bool in
+//            return (c.firstName == "Michael") && (c.lastName == "Laudrup")
+//        }).first
         
         let stop1 = allStops[0]
         let stop2 = allStops[1]
@@ -68,16 +88,25 @@ public class DataHelper {
         let stop4 = allStops[3]
         let stop5 = allStops[4]
         
+//        let routes = [
+//            (routeName: "Mondays", company: "St. Elizabeths", stops: NSSet(array: [stop1!, stop2!])),
+//            (routeName: "Wednesdays", company: "St. Judes", stops: NSSet(array: [stop2!, stop3!, stop4!])),
+//            (routeName: "Tuesdays", company: "St. Mary's", stops: NSSet(array: [stop5!])),
+//            (routeName: "Sundays", company: "Kindred", stops: NSSet(array: [stop1!, stop2!, stop4!, stop5!])),
+//            (routeName: "Fridays", company: "Homeway", stops: NSSet(array: [stop1!]))
+//        ]
+        
+        
         let routes = [
+            (routeName: "Fridays", company: "Homeway", stops: NSSet(array: [stop1])),
             (routeName: "Mondays", company: "St. Elizabeths", stops: NSSet(array: [stop1, stop2])),
             (routeName: "Wednesdays", company: "St. Judes", stops: NSSet(array: [stop2, stop3, stop4])),
             (routeName: "Tuesdays", company: "St. Mary's", stops: NSSet(array: [stop5])),
-            (routeName: "Sundays", company: "Kindred", stops: NSSet(array: [stop1, stop2, stop4, stop5])),
-            (routeName: "Fridays", company: "Homeway", stops: NSSet(array: [stop1]))
+            (routeName: "Sundays", company: "Kindred", stops: NSSet(array: [stop1, stop2, stop4, stop5]))
         ]
         //print("\(routes)")
         
-        for route  in routes {
+        for route in routes {
             let newRouteObject = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: context) as! Route
             newRouteObject.routeName = route.routeName
             newRouteObject.company = route.company
@@ -88,8 +117,10 @@ public class DataHelper {
         
         do {
             try context.save()
-        } catch _ {
+        } catch let error as NSError {
+            print("Could not save \(error.localizedDescription)")
         }
+
     }
     
     

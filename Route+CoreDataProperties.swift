@@ -18,5 +18,6 @@ extension Route {
     @NSManaged var company: String?
     @NSManaged var created: NSDate?
     @NSManaged var stops: NSSet?
+    //@NSManaged var routeIndex: Int16
 
 }

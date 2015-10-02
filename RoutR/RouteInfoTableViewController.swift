@@ -36,7 +36,10 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         navigationItem.title = self.route!.routeName
         performFetch()
         executeStopFetchResult()
-        //print("\(route)")
+        print("\(route)")
+        print("")
+        print("\(route?.stops)")
+        print("")
 
     }
 
@@ -117,22 +120,16 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
 //        print("\(indexPath.section)")
 //        print("\(indexPath.row)")
         //print("Configuring SpotsCell")
-//        do {
+        print("")
+        print("Index path :\(indexPath)")
+        print("Indexpath row: \(indexPath.row)")
         
-            //let thisStop = fetchResults[indexPath.row]
-
-            let stop = self.fetchStopResults[indexPath.row] // stop = self.frc.objectAtIndexPath(indexPath) as? Stop {
-            cell.firstNameLabel.text = "\(stop.firstName!) \(stop.lastName!)"
-            //cell.lastNameLabel.text = "\(stop.lastName!)"
-            cell.addressLabel.text = "\(stop.houseNumber!) \(stop.street!), \(stop.town!), \(stop.state!), \(stop.zipCode!)"
-            cell.distanceToLabel.text = "5 mi."
-            cell.timeToLabel.text = "10 mins"
-            
-//
-//        } catch let error as NSError {
-//            print("\(error.localizedDescription)")
-//        }
-        
+        let stop = self.fetchStopResults[indexPath.row] // stop = self.frc.objectAtIndexPath(indexPath) as? Stop {
+        cell.firstNameLabel.text = "\(stop.firstName!) \(stop.lastName!)"
+        //cell.lastNameLabel.text = "\(stop.lastName!)"
+        cell.addressLabel.text = "\(stop.houseNumber!) \(stop.street!), \(stop.town!), \(stop.state!), \(stop.zipCode!)"
+        cell.distanceToLabel.text = "5 mi."
+        cell.timeToLabel.text = "10 mins"
     }
     
     
@@ -214,9 +211,15 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
 //        let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
 //        let createdSort = NSSortDescriptor(key: "created", ascending: false)
         request.sortDescriptors = [] //createdSort, routeNameSort]  //departmentSort,
-        request.predicate =  NSPredicate(format:"ANY  route.routeName = %@", (route?.routeName)!)
-        
-        //self.stopsFetch = request
+        //request.predicate =  NSPredicate(format:"ANY  route.routeName = %@", (route?.routeName)!)
+        print("Route Object ID: \(route?.objectID)")
+        print("")
+        request.predicate =  NSPredicate(format:"ANY route == %@", route!.objectID)
+        //request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && route.company CONTAINS[cd] %@", (route?.routeName)!, (route?.company)!)
+        //let myStops = self.route?.stops
+        //request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && ANY route.company =[cd] %@",
+        //    (route?.routeName)!, (route?.company)!)
+
         
         return request
     }

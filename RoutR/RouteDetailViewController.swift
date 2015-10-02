@@ -94,21 +94,22 @@ class RouteDetailViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    private func saveRouteFromDict(routeDict routeDict : [String: String]) {
-        let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
-        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
-        route.company = routeDict["company"]
-        route.created = NSDate()
-        route.routeName = routeDict["routeName"]
-        
-        do {
-            try moc.save()
-            print("saved route \(route)")
-            
-        } catch let error as NSError {
-            print("Could not save (root) \(error.localizedDescription)")
-        }
-    }
+//    private func saveRouteFromDict(routeDict routeDict : [String: String]) {
+//        Route.createInManagedObjectContext(moc, routeName: routeDict["routeName"]!, company: routeDict["company"]!, stops: NSSet(array: []))
+////        let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
+////        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+////        route.company = routeDict["company"]
+////        route.created = NSDate()
+////        route.routeName = routeDict["routeName"]
+////        
+////        do {
+////            try moc.save()
+////            print("saved route \(route)")
+////            
+////        } catch let error as NSError {
+////            print("Could not save (root) \(error.localizedDescription)")
+////        }
+//    }
     
 
     // MARK: - Navigation

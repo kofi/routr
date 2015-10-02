@@ -12,6 +12,8 @@
 import Foundation
 import CoreData
 
+//@objc(Stop)
+
 extension Stop {
 
     @NSManaged var firstName: String?
@@ -23,5 +25,5 @@ extension Stop {
     @NSManaged var zipCode: String?
     @NSManaged var country: String?
     @NSManaged var route: NSManagedObject?
-
+    
 }

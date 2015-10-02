@@ -63,40 +63,44 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     // MARK: - Save Edit Routines
     
     private func saveRouteFromDict(routeDict routeDict : [String: String]) {
-        let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
-        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
-        route.company = routeDict["company"]
-        route.created = NSDate()
-        route.routeName = routeDict["routeName"]
-        //route.stops = NSSet()
         
-        print("\(route)")
+        Route.createInManagedObjectContext(moc, routeName: routeDict["routeName"]!, company: routeDict["company"]!, stops: NSSet(array: []))
         
-        do {
-            try moc.save()
-            //print("saved route \(route)")
-
-        } catch let error as NSError {
-            print("Could not save \(error.description)")
-            
-        }
+//        let route = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
+//        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+//        route.company = routeDict["company"]
+//        route.created = NSDate()
+//        route.routeName = routeDict["routeName"]
+//        //route.stops = NSSet()
+//        
+//        print("\(route)")
+//        
+//        do {
+//            try moc.save()
+//            //print("saved route \(route)")
+//
+//        } catch let error as NSError {
+//            print("Could not save \(error.description)")
+//            
+//        }
     }
     
     private func saveRoute(route route : Route) {
-        let routeSave = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
-
-        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
-        routeSave.company = route.company!
-        routeSave.created = NSDate()
-        routeSave.routeName = route.routeName!
-        
-        do {
-            try moc.save()
-            //print("saved route \(routeSave)")
-            
-        } catch let error as NSError {
-            print("Could not save \(error.localizedDescription)")
-        }
+        Route.createInManagedObjectContext(moc, routeName: route.routeName!, company: route.company!, stops: NSSet(array: []))
+//        let routeSave = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: self.moc) as! Route
+//
+//        //let route1 = Route(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+//        routeSave.company = route.company!
+//        routeSave.created = NSDate()
+//        routeSave.routeName = route.routeName!
+//        
+//        do {
+//            try moc.save()
+//            //print("saved route \(routeSave)")
+//            
+//        } catch let error as NSError {
+//            print("Could not save \(error.localizedDescription)")
+//        }
     }
     
     
@@ -105,7 +109,6 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         do {
             moc.deleteObject(managedObject)
             try moc.save()
-            //print("successfully deleted route")
 
         } catch let error as NSError {
             print("Could not save \(error.localizedDescription)")
