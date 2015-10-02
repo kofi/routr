@@ -288,6 +288,32 @@
                                     <outlet property="timeToLabel" destination="NhL-Qb-3uZ" id="yVb-lZ-kcc"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="routeMapCell" rowHeight="200" id="nYN-ix-RKM" customClass="RouteStopsMapsCell" customModule="RoutR" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="246" width="600" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nYN-ix-RKM" id="8GX-fj-cK1">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="199"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XI1-B2-dx3">
+                                            <rect key="frame" x="0.0" y="2" width="600" height="195"/>
+                                            <animations/>
+                                        </mapView>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="XI1-B2-dx3" secondAttribute="trailing" id="Kkx-3n-CX1"/>
+                                        <constraint firstItem="XI1-B2-dx3" firstAttribute="leading" secondItem="8GX-fj-cK1" secondAttribute="leading" id="PtE-sw-yYN"/>
+                                        <constraint firstAttribute="bottom" secondItem="XI1-B2-dx3" secondAttribute="bottom" constant="2" id="USw-iq-iJa"/>
+                                        <constraint firstItem="XI1-B2-dx3" firstAttribute="top" secondItem="8GX-fj-cK1" secondAttribute="top" constant="2" id="boc-xD-RWV"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.67651357540000001" blue="0.206439235" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="stopsMap" destination="XI1-B2-dx3" id="48F-s2-8xS"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="imK-3a-EO2" id="iVW-IU-pTz"/>

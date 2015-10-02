@@ -33,29 +33,30 @@ public class DataHelper {
     
     private func seedStops() {
         let stops = [
-            (firstName: "John", lastName: "Doe", street: "ALLSTON CT.", houseNumber: "1", town: "Cambridge", state: "Massachusetts", zipCode: "02139-3919"),
-            (firstName: "Jane", lastName: "Mael", street: "APPLETON ST", houseNumber: "174", town: "Cambridge", state: "Massachusetts", zipCode: "02138-1331"),
-            (firstName: "David", lastName: "Johnson", street: "Ash ST.", houseNumber: "31", town: "Cambridge", state: "Massachusetts", zipCode: "02138"),
-            (firstName: "Shirley", lastName: "Chisolm", street: "Aberdeen CT.", houseNumber: "1", town: "Cambridge", state: "Massachusetts", zipCode: "02138"),
-            (firstName: "Michael", lastName: "Laudrup", street: "AGASSIZ St.", houseNumber: "18", town: "Cambridge", state: "Massachusetts", zipCode: "02140-2802")
+            (firstName: "John", lastName: "Doe", street: "ALLSTON CT.", houseNumber: "1", town: "Cambridge", state: "Massachusetts", zipCode: "02139-3919", country: "US"),
+            (firstName: "Jane", lastName: "Mael", street: "APPLETON ST", houseNumber: "174", town: "Cambridge", state: "Massachusetts", zipCode: "02138-1331" , country: "US"),
+            (firstName: "David", lastName: "Johnson", street: "Ash ST.", houseNumber: "31", town: "Cambridge", state: "Massachusetts", zipCode: "02138", country: "US"),
+            (firstName: "Shirley", lastName: "Chisolm", street: "Aberdeen CT.", houseNumber: "1", town: "Cambridge", state: "Massachusetts", zipCode: "02138", country: "US"),
+            (firstName: "Michael", lastName: "Laudrup", street: "AGASSIZ St.", houseNumber: "18", town: "Cambridge", state: "Massachusetts", zipCode: "02140-2802", country: "US")
         ]
         
         for stop in stops {
-            let newStopObject = NSEntityDescription.insertNewObjectForEntityForName("Stop", inManagedObjectContext: context) as! Stop
-            newStopObject.firstName = stop.firstName
-            newStopObject.lastName = stop.lastName
-            newStopObject.street = stop.street
-            newStopObject.houseNumber = stop.houseNumber
-            newStopObject.town = stop.town
-            newStopObject.state = stop.state
-            newStopObject.zipCode = stop.zipCode
-            newStopObject.country = "US"
+            Stop.createInManagedObjectContext(context, firstName: stop.firstName, lastName: stop.lastName, street: stop.street, houseNumber: stop.houseNumber, town: stop.town, state: stop.state, zipCode: stop.zipCode, country: stop.country)
+//            let newStopObject = NSEntityDescription.insertNewObjectForEntityForName("Stop", inManagedObjectContext: context) as! Stop
+//            newStopObject.firstName = stop.firstName
+//            newStopObject.lastName = stop.lastName
+//            newStopObject.street = stop.street
+//            newStopObject.houseNumber = stop.houseNumber
+//            newStopObject.town = stop.town
+//            newStopObject.state = stop.state
+//            newStopObject.zipCode = stop.zipCode
+//            newStopObject.country = "US"
         }
-        do {
-            try context.save()
-        } catch _ {
-            
-        }
+//        do {
+//            try context.save()
+//        } catch _ {
+//            
+//        }
 
 
     }
@@ -107,19 +108,21 @@ public class DataHelper {
         //print("\(routes)")
         
         for route in routes {
-            let newRouteObject = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: context) as! Route
-            newRouteObject.routeName = route.routeName
-            newRouteObject.company = route.company
-            newRouteObject.stops = route.stops
-            print("\(route.stops.count)")
-            newRouteObject.created = NSDate()
+            Route.createInManagedObjectContext(context, routeName: route.routeName, company: route.company, stops: route.stops)
+            //thisRoute.setStopIndexes()
+//            let newRouteObject = NSEntityDescription.insertNewObjectForEntityForName("Route", inManagedObjectContext: context) as! Route
+//            newRouteObject.routeName = route.routeName
+//            newRouteObject.company = route.company
+//            newRouteObject.stops = route.stops
+//            //print("\(route.stops.count)")
+//            newRouteObject.created = NSDate()
         }
         
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print("Could not save \(error.localizedDescription)")
-        }
+//        do {
+//            try context.save()
+//        } catch let error as NSError {
+//            print("Could not save \(error.localizedDescription)")
+//        }
 
     }
     

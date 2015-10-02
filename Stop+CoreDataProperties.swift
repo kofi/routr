@@ -26,4 +26,6 @@ extension Stop {
     @NSManaged var country: String?
     @NSManaged var route: NSManagedObject?
     
+    @NSManaged var stopToRoute: StopIndex?
+    
 }

@@ -25,6 +25,9 @@
 		DB78B2241BBDB10D0036A179 /* RouteDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78B2231BBDB10D0036A179 /* RouteDetailTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		DB78B2271BBDB1710036A179 /* RouteStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78B2261BBDB1710036A179 /* RouteStopsTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		DB78B2291BBDB1900036A179 /* RouteInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB78B2281BBDB1900036A179 /* RouteInfoTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DBBE409B1BBF0CA1007FD260 /* RouteStopsMapsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE409A1BBF0CA1007FD260 /* RouteStopsMapsCell.swift */; settings = {ASSET_TAGS = (); }; };
+		DBBE409F1BBF14AC007FD260 /* StoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE409E1BBF14AC007FD260 /* StoreLocation.swift */; settings = {ASSET_TAGS = (); }; };
+		DBBE40A11BBF2E18007FD260 /* StopIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE40A01BBF2E18007FD260 /* StopIndex.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,9 @@
 		DB78B2261BBDB1710036A179 /* RouteStopsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteStopsTableViewCell.swift; sourceTree = "<group>"; };
 		DB78B2281BBDB1900036A179 /* RouteInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewController.swift; sourceTree = "<group>"; };
 		DBBE40991BBEFA93007FD260 /* modelWithRouteIndex.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = modelWithRouteIndex.xcdatamodel; sourceTree = "<group>"; };
+		DBBE409A1BBF0CA1007FD260 /* RouteStopsMapsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteStopsMapsCell.swift; sourceTree = "<group>"; };
+		DBBE409E1BBF14AC007FD260 /* StoreLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreLocation.swift; path = RoutR/StoreLocation.swift; sourceTree = "<group>"; };
+		DBBE40A01BBF2E18007FD260 /* StopIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopIndex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,9 +164,11 @@
 			children = (
 				DB164B191BBC06120040949D /* Stop+CoreDataProperties.swift */,
 				DB164B1A1BBC06120040949D /* Stop.swift */,
+				DBBE40A01BBF2E18007FD260 /* StopIndex.swift */,
 				DB164B1B1BBC06120040949D /* Route+CoreDataProperties.swift */,
 				DB164B1C1BBC06120040949D /* Route.swift */,
 				DB78B2211BBD7FAF0036A179 /* DataHelper.swift */,
+				DBBE409E1BBF14AC007FD260 /* StoreLocation.swift */,
 			);
 			name = RoutREntities;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 				DB78B21F1BBD5C9C0036A179 /* RouteTableViewCell.swift */,
 				DB78B2231BBDB10D0036A179 /* RouteDetailTableViewCell.swift */,
 				DB78B2261BBDB1710036A179 /* RouteStopsTableViewCell.swift */,
+				DBBE409A1BBF0CA1007FD260 /* RouteStopsMapsCell.swift */,
 			);
 			name = CustomTableViewCells;
 			sourceTree = "<group>";
@@ -308,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBBE409B1BBF0CA1007FD260 /* RouteStopsMapsCell.swift in Sources */,
 				DB78B2241BBDB10D0036A179 /* RouteDetailTableViewCell.swift in Sources */,
 				DB164AF11BBBFC500040949D /* RoutR.xcdatamodeld in Sources */,
 				DB78B2201BBD5C9C0036A179 /* RouteTableViewCell.swift in Sources */,
@@ -315,9 +325,11 @@
 				DB164B1D1BBC06120040949D /* Stop+CoreDataProperties.swift in Sources */,
 				DB164B251BBC417C0040949D /* RouteDetailViewController.swift in Sources */,
 				DB164B231BBC0A7C0040949D /* RootViewController.swift in Sources */,
+				DBBE40A11BBF2E18007FD260 /* StopIndex.swift in Sources */,
 				DB164B1E1BBC06120040949D /* Stop.swift in Sources */,
 				DB164B201BBC06120040949D /* Route.swift in Sources */,
 				DB164AE91BBBFC500040949D /* AppDelegate.swift in Sources */,
+				DBBE409F1BBF14AC007FD260 /* StoreLocation.swift in Sources */,
 				DB78B2291BBDB1900036A179 /* RouteInfoTableViewController.swift in Sources */,
 				DB78B2221BBD7FAF0036A179 /* DataHelper.swift in Sources */,
 				DB78B2271BBDB1710036A179 /* RouteStopsTableViewCell.swift in Sources */,
@@ -576,7 +588,7 @@
 				DBBE40991BBEFA93007FD260 /* modelWithRouteIndex.xcdatamodel */,
 				DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */,
 			);
-			currentVersion = DB164AF01BBBFC500040949D /* RoutR.xcdatamodel */;
+			currentVersion = DBBE40991BBEFA93007FD260 /* modelWithRouteIndex.xcdatamodel */;
 			path = RoutR.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -171,7 +171,10 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         //let routeNameSort = NSSortDescriptor(key: "department.name", ascending: true)
         let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
         let createdSort = NSSortDescriptor(key: "created", ascending: false)
-        request.sortDescriptors = [createdSort, routeNameSort]  //departmentSort,
+        request.sortDescriptors = [routeNameSort, createdSort]  //departmentSort,
+        // Sort is essential to get the headers and cell details to match
+        // http://stackoverflow.com/questions/30946986/nsfetchedresultscontroller-swift-sections
+        
         
         return request
     }
@@ -301,8 +304,12 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // do we ha
+                    //print("\(self.frc.sections)")
         if let sections = self.frc.sections {
+            //print("\(section)")
+            
             let currentSection = sections[section]
+            //print("\(currentSection.name)")
             return currentSection.name
         }
         

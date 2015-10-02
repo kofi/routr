@@ -8,12 +8,16 @@
 
 import UIKit
 import CoreData
+import MapKit
+import CoreLocation
 
-class RouteInfoTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+
+class RouteInfoTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, MKMapViewDelegate {
     
-    let infoSections = ["Route","Stops"]
+    let infoSections = ["Route","Stops","Maps"]
     let infoCell = "routeInfoDetailCell"
     let spotsCell = "routeInfoStopsCell"
+    let mapCell = "routeMapCell"
     var route: Route?
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -36,10 +40,12 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         navigationItem.title = self.route!.routeName
         performFetch()
         executeStopFetchResult()
-        print("\(route)")
-        print("")
-        print("\(route?.stops)")
-        print("")
+//        print("\(route)")
+//        print("")
+//        print("\(route?.stops)")
+//        print("")
+
+        
 
     }
 
@@ -63,12 +69,20 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return section == 0 ? 1: (route!.stops?.count)!
+        //return section == 0 ? 1:
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return (route!.stops?.count)!
+        default:
+            return 1
+        }
 
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
+        if section != 0 {
             return infoSections[section]
         }
         return ""
@@ -84,23 +98,54 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
         // Configure the cell...
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             // we are in the info section
             let cell = tableView.dequeueReusableCellWithIdentifier(infoCell, forIndexPath: indexPath) as! RouteDetailTableViewCell
             configureInfoCell(cell: cell, indexPath: indexPath)
             
             return cell
-            
-        } else {
+        case 1:
             // we want to loop over the stops
             let cell = tableView.dequeueReusableCellWithIdentifier(spotsCell, forIndexPath: indexPath) as! RouteStopsTableViewCell
             configureSpotsCell(cell: cell, indexPath: indexPath)
             
             return cell
+        
+        default:
+            let cell = tableView.dequeueReusableCellWithIdentifier(mapCell, forIndexPath: indexPath) as! RouteStopsMapsCell
+            configureMapsCell(cell: cell)
+            return cell
         }
-
-        //return cell
+        
     }
+    
+    
+    // MARK: Configure Map Views
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? StoreLocation {
+            let identifier = "pin"
+            var view: MKPinAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+                as? MKPinAnnotationView { // 2
+                    dequeuedView.annotation = annotation
+                    view = dequeuedView
+            } else {
+                // 3
+                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+            }
+            return view
+        }
+        return nil
+        
+        
+    }
+    
+    
+    // MARK: Configure custom cells
 
     func configureInfoCell(cell cell: RouteDetailTableViewCell, indexPath: NSIndexPath){
         cell.companyLabel.text = route!.company
@@ -116,9 +161,7 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     
     
     func configureSpotsCell(cell cell: RouteStopsTableViewCell, indexPath: NSIndexPath) {
-//        print("\(indexPath)")
-//        print("\(indexPath.section)")
-//        print("\(indexPath.row)")
+        // print("\(indexPath)") //        print("\(indexPath.section)")//        print("\(indexPath.row)")
         //print("Configuring SpotsCell")
         print("")
         print("Index path :\(indexPath)")
@@ -132,59 +175,86 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         cell.timeToLabel.text = "10 mins"
     }
     
+    func configureMapsCell(cell cell: RouteStopsMapsCell) {
+        /*
+        // See http://stackoverflow.com/questions/31360885/clgeocoder-swift-2-version
+        // https://github.com/varshylmobile/LocationManager
+        // http://www.techotopia.com/index.php/An_Example_Swift_iOS_8_MKMapItem_Application
+        // http://www.raywenderlich.com/90971/introduction-mapkit-swift-tutorial
+        // http://stackoverflow.com/questions/25364418/pairing-mkannotation-to-uitableviewcell
+        */
+        print("configuring the maps")
+        cell.stopsMap.delegate = self
+        //cell.initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
+        cell.initialLocation = CLLocation(latitude: 42.3601, longitude: -71.0589) // Boston
+        cell.centerMapOnLocation(cell.initialLocation!)
+        
+        //        let artwork = StoreLocation(title: "King David Kalakaua",
+        //            locationName: "Waikiki Gateway Park",
+        //            discipline: "Sculpture",
+        //            coordinate: CLLocationCoordinate2D(latitude: 21.283921, longitude: -157.831661))
+        //        cell.stopsMap.addAnnotation(artwork)
+        
+        let stopIndexCount : Int = 0
+        
+        for stop in (self.route?.stops)!  {
+            
+            let routeStop = stop as! Stop
+            
+            let stopIndexInRoute = routeStop.getIndexForRoute((self.route?.objectID)!)
+            print("\(stopIndexInRoute)")
+            
+            
+            let title = "\(routeStop.firstName!) \(routeStop.lastName!)"
+            print("Index of \(title) in \(route?.routeName) is \(stopIndexInRoute)")
+            
+            let discipline = "Patient"
+            let locationName = "\(routeStop.houseNumber!) \(routeStop.street!)"
+            
+            // get the address string we are going to use to find the coordinates
+            let addressString = "\(routeStop.houseNumber!) \(routeStop.street!), \(routeStop.town!), \(routeStop.state!), \(routeStop.zipCode!)"
+            
+            // find the location coordinates from the address using CLGeocoder
+            let geoCoder = CLGeocoder()
+            geoCoder.geocodeAddressString(addressString) { (placemarks, error) -> Void in
+                // if we don't get back and address
+                if error != nil {
+                    print("Error finding location for \(title) | \(error)")
+                } else {
+                    
+                    let placemark = placemarks![0]
+                    let location = placemark.location
+                    let stopCoordinates = location!.coordinate
+                    let stopLocation = StoreLocation(
+                        title: title, locationName: locationName, discipline: discipline,
+                        coordinate: stopCoordinates)  //CLLocationCoordinate2D(latitude: 42.3601, longitude: -71.0589))
+                    
+                    if stopIndexCount == 0 {
+                        cell.initialLocation = CLLocation(latitude: stopCoordinates.latitude, longitude: stopCoordinates.longitude)  //CLLocation(latitude: 42.3601, longitude: -71.0589) // Boston
+                        cell.centerMapOnLocation(cell.initialLocation!)
+                    }
+                    
+                    cell.stopsMap.addAnnotation(stopLocation)
+                }
+                
+            }
+            
+        }
+    
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             return 50
-        } else {
+        case 1:
             return 60
+        
+        default:
+            return 200
         }
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
 
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: Fetch routines
     
@@ -208,8 +278,8 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     func itemFetchRequest() -> NSFetchRequest {
         let request = NSFetchRequest(entityName: "Stop")
         //let routeNameSort = NSSortDescriptor(key: "department.name", ascending: true)
-//        let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
-//        let createdSort = NSSortDescriptor(key: "created", ascending: false)
+        //let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
+        //let createdSort = NSSortDescriptor(key: "created", ascending: false)
         request.sortDescriptors = [] //createdSort, routeNameSort]  //departmentSort,
         //request.predicate =  NSPredicate(format:"ANY  route.routeName = %@", (route?.routeName)!)
         print("Route Object ID: \(route?.objectID)")
@@ -283,7 +353,7 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         self.tableView.endUpdates()
     }
 
-    // MARK: segues
+    // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

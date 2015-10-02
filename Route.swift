@@ -20,13 +20,36 @@ class Route: NSManagedObject {
         newRoute.created = NSDate()
         newRoute.stops = stops
         
+        
         do {
             try moc.save()
         } catch let error as NSError {
             print("Could not save \(error.localizedDescription)")
         }
         
+        newRoute.setStopIndexes()
+        
         return newRoute
+    }
+    
+    func setStopIndexes() {
+        var count : Int = 0
+        //var stops = self.stops
+        for stop in self.stops!  {
+            //let routeStop = stop as! Stop
+            let myStopIndex = (stop as! Stop).stopToRoute
+            //print("\(myStopIndex)")
+            //print("\(self.objectID)")
+            //print("\(self.stops)")
+            //print("\(count)")
+            myStopIndex?.indexes[self.objectID] = count
+            //(stop as! Stop).stopToRoute!.indexes[self.objectID] = count
+            (stop as! Stop).stopToRoute = myStopIndex
+            let indexes = (stop as! Stop).stopToRoute!.indexes
+            print("\(indexes)")
+            count++
+        }
+        
     }
 
 
