@@ -36,6 +36,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         //createStarterRoutes()
         initializeFetchedResultsController()
         performFetch()
+        self.tableView.reloadData()
         //print("I cant wait to push this project to GitHub")
         //print(moc)
         
@@ -220,6 +221,7 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
+        self.tableView.reloadData()
     }
 
     
@@ -281,8 +283,9 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
                 cell.routeIndexLabel!.text =  "\(indexPath.section + 1)"  //"\(indexPath.section * (thisSectionCount-1) + indexPath.row+1)"
             }
         }
+        //cell.routeIndexLabel!.text = "\(route.stops!.count)"
         //cell.routeIndexLabel.text = "\(route.company!)"
-        cell.routeStopCountLabel!.text = "\(route.stops!.count)"
+        cell.routeStopCountLabel!.text =  "\(route.stops!.count)" // "\(Int(arc4random_uniform(10)))"
         // http://www.globalnerdy.com/2015/01/26/how-to-work-with-dates-and-times-in-swift-part-one/
         let formatter = NSDateFormatter()
         //formatter.stringFromDate(route.created!)
@@ -356,15 +359,14 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     @IBAction func unwindToRouteView(sender: UIStoryboardSegue) {
         print("Coming from Route View Controller")
-        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController,
-            routeDict = sourceViewController.routeDict {
+        if let sourceViewController = sender.sourceViewController as? RouteDetailViewController, routeDict = sourceViewController.routeDict {
                 
-                if  routeDict["routeName"] != "" { //let selectedIndexPath =
-                    print("\(routeDict)")
-                    saveRouteFromDict(routeDict: routeDict)
-                }
-                
-                
+            if  routeDict["routeName"] != "" { //let selectedIndexPath =
+                print("\(routeDict)")
+                saveRouteFromDict(routeDict: routeDict)
+            }
+            
+            
         }
     }
 
