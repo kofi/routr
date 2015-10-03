@@ -20,11 +20,13 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     let mapCell = "routeMapCell"
     var route: Route?
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    var routeDistances : [Float] = []
     
     var frc: NSFetchedResultsController!
     var stopsFetch = NSFetchRequest() // NSFetchRequest(entityName: "Stop")
     
     var fetchStopResults : [Stop] = []
+    var storeLocation: [NSManagedObjectID: StoreLocation] = [NSManagedObjectID: StoreLocation]()
     
     
     override func viewDidLoad() {
@@ -40,6 +42,8 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         navigationItem.title = self.route!.routeName
         performFetch()
         executeStopFetchResult()
+        getAllStopLocations()
+        routeDistances = route!.getDistanceBetweenStops()
 //        print("\(route)")
 //        print("")
 //        print("\(route?.stops)")
@@ -163,16 +167,76 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     func configureSpotsCell(cell cell: RouteStopsTableViewCell, indexPath: NSIndexPath) {
         // print("\(indexPath)") //        print("\(indexPath.section)")//        print("\(indexPath.row)")
         //print("Configuring SpotsCell")
-        print("")
-        print("Index path :\(indexPath)")
-        print("Indexpath row: \(indexPath.row)")
+        //print("")
+        //print("Index path :\(indexPath)")
+        //print("Indexpath row: \(indexPath.row)")
         
         let stop = self.fetchStopResults[indexPath.row] // stop = self.frc.objectAtIndexPath(indexPath) as? Stop {
         cell.firstNameLabel.text = "\(stop.firstName!) \(stop.lastName!)"
         //cell.lastNameLabel.text = "\(stop.lastName!)"
         cell.addressLabel.text = "\(stop.houseNumber!) \(stop.street!), \(stop.town!), \(stop.state!), \(stop.zipCode!)"
-        cell.distanceToLabel.text = "5 mi."
+        let stopIndex = stop.getIndexForRoute((route?.objectID)!)
+        //let stopDistance = 0 //routeDistances[stopIndex]
+         var stopDistance = Double(routeDistances[stopIndex])
+        
+        let stopLocation = storeLocation[stop.objectID]  //StoreLocation(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+        //stop.getStoreLocation(stopLocation)
+        if stopLocation != nil {
+            let stopCLLocation = CLLocation(latitude: stopLocation!.coordinate.latitude, longitude: stopLocation!.coordinate.longitude)
+            
+            //let stopCount = route!.stops!.count
+           
+            
+            switch stopIndex {
+            case 0:
+                stopDistance = 0
+            default:
+                let prevStop = route?.getStopForIndex(stopIndex - 1)
+                
+                let prevStopLocation = storeLocation[prevStop!.objectID]  // StoreLocation(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                //prevStop!.getStoreLocation(prevStopLocation)
+                if prevStopLocation != nil {
+                    let prevStopCLLocation = CLLocation(latitude: prevStopLocation!.coordinate.latitude, longitude: prevStopLocation!.coordinate.longitude)
+                    
+                    stopDistance = stopCLLocation.distanceFromLocation(prevStopCLLocation)
+                    
+                    stopDistance = stopDistance * 0.000621371
+                }
+            }
+        }
+        
+        cell.distanceToLabel.text = NSString(format: "%.2f", stopDistance) as String
         cell.timeToLabel.text = "10 mins"
+    }
+    
+    func setStoreLocation(placemark: CLPlacemark, stop: Stop){
+        let placemark = placemark
+        let placelocation = placemark.location
+        let stopCoordinates = placelocation!.coordinate
+        let mylocation = StoreLocation(title: stop.getTitle(), locationName: stop.getPatientName(), discipline: "Patient",coordinate: stopCoordinates)
+        print("location is \(mylocation)")
+        //genLocation = "location is \(mylocation)"
+        //print(genLocation)
+        storeLocation[stop.objectID] = mylocation
+        
+        //http://stackoverflow.com/questions/8306792/uitableview-reload-section
+        let indexSet: NSMutableIndexSet = NSMutableIndexSet()
+        indexSet.addIndex(0)
+        indexSet.addIndex(1)
+        //let range = NSMakeRange(1,1)
+        //indexSet.indexesInRange(range, options: nil, passingTest: nil)
+        //self.tableView.reloadData()
+        self.tableView.reloadSections(indexSet, withRowAnimation: UITableViewRowAnimation.Left)
+        
+        //CLLocationCoordinate2D(latitude: 42.3601, longitude: -71.0589))
+        
+    }
+    
+    func getAllStopLocations() {
+        for stop in (route?.stops)! {
+            let address = (stop as! Stop).getAddress()
+            getPlacemarkFromLocation(address, stop: (stop as! Stop))
+        }
     }
     
     func configureMapsCell(cell cell: RouteStopsMapsCell) {
@@ -189,11 +253,6 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         cell.initialLocation = CLLocation(latitude: 42.3601, longitude: -71.0589) // Boston
         cell.centerMapOnLocation(cell.initialLocation!)
         
-        //        let artwork = StoreLocation(title: "King David Kalakaua",
-        //            locationName: "Waikiki Gateway Park",
-        //            discipline: "Sculpture",
-        //            coordinate: CLLocationCoordinate2D(latitude: 21.283921, longitude: -157.831661))
-        //        cell.stopsMap.addAnnotation(artwork)
         
         let stopIndexCount : Int = 0
         
@@ -203,7 +262,6 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
             
             let stopIndexInRoute = routeStop.getIndexForRoute((self.route?.objectID)!)
             print("\(stopIndexInRoute)")
-            
             
             let title = "\(routeStop.firstName!) \(routeStop.lastName!)"
             print("Index of \(title) in \(route?.routeName) is \(stopIndexInRoute)")
@@ -226,8 +284,7 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
                     let location = placemark.location
                     let stopCoordinates = location!.coordinate
                     let stopLocation = StoreLocation(
-                        title: title, locationName: locationName, discipline: discipline,
-                        coordinate: stopCoordinates)  //CLLocationCoordinate2D(latitude: 42.3601, longitude: -71.0589))
+                        title: title, locationName: locationName, discipline: discipline,coordinate: stopCoordinates)  //CLLocationCoordinate2D(latitude: 42.3601, longitude: -71.0589))
                     
                     if stopIndexCount == 0 {
                         cell.initialLocation = CLLocation(latitude: stopCoordinates.latitude, longitude: stopCoordinates.longitude)  //CLLocation(latitude: 42.3601, longitude: -71.0589) // Boston
@@ -242,6 +299,22 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
         }
     
     }
+    
+    func getPlacemarkFromLocation(address: String, stop: Stop){
+        // See http://stackoverflow.com/questions/24345296/swift-clgeocoder-reversegeocodelocation-completionhendler-closure
+        CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+            if (error != nil) {
+                print("geodcode fail: \(error!.localizedDescription)")
+            } else {
+                let pm = placemarks! as [CLPlacemark]
+                if pm.count > 0 {
+                    self.setStoreLocation(pm[0] as CLPlacemark, stop: stop)
+                }
+            }
+        })
+    }
+    
+    //func getDistanceBetweenStop
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
@@ -277,13 +350,14 @@ class RouteInfoTableViewController: UITableViewController, NSFetchedResultsContr
     
     func itemFetchRequest() -> NSFetchRequest {
         let request = NSFetchRequest(entityName: "Stop")
-        //let routeNameSort = NSSortDescriptor(key: "department.name", ascending: true)
+        //let indexSort = NSSortDescriptor(key: "ANY route.getIndexForStop", ascending: true)
         //let routeNameSort = NSSortDescriptor(key: "routeName", ascending: true)
-        //let createdSort = NSSortDescriptor(key: "created", ascending: false)
-        request.sortDescriptors = [] //createdSort, routeNameSort]  //departmentSort,
+        let createdSort = NSSortDescriptor(key: "created", ascending: false)
+        
+        request.sortDescriptors = [createdSort]  //departmentSort,
         //request.predicate =  NSPredicate(format:"ANY  route.routeName = %@", (route?.routeName)!)
-        print("Route Object ID: \(route?.objectID)")
-        print("")
+        //print("Route Object ID: \(route?.objectID)")
+        //print("")
         request.predicate =  NSPredicate(format:"ANY route == %@", route!.objectID)
         //request.predicate =  NSPredicate(format:"ANY route.routeName =[cd] %@ && route.company CONTAINS[cd] %@", (route?.routeName)!, (route?.company)!)
         //let myStops = self.route?.stops

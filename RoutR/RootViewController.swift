@@ -175,7 +175,6 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         // Sort is essential to get the headers and cell details to match
         // http://stackoverflow.com/questions/30946986/nsfetchedresultscontroller-swift-sections
         
-        
         return request
     }
     
@@ -270,8 +269,16 @@ class RootViewController: UITableViewController, NSFetchedResultsControllerDeleg
         return cell
     }
     
+//    func getAllStopLocations(route: Route) {
+//        for stop in (route?.stops)! {
+//            let address = (stop as! Stop).getAddress()
+//            getPlacemarkFromLocation(address, stop: (stop as! Stop))
+//        }
+//    }
+//    
     func configureCell(cell: RouteTableViewCell, indexPath: NSIndexPath) {
         let route = self.frc.objectAtIndexPath(indexPath) as! Route
+        
         // Populate cell from the NSManagedObject instance
         //cell.textLabel?.text = route.routeName
         cell.routeNameLabel!.text = "\(route.routeName!)"

@@ -28,6 +28,7 @@
 		DBBE409B1BBF0CA1007FD260 /* RouteStopsMapsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE409A1BBF0CA1007FD260 /* RouteStopsMapsCell.swift */; settings = {ASSET_TAGS = (); }; };
 		DBBE409F1BBF14AC007FD260 /* StoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE409E1BBF14AC007FD260 /* StoreLocation.swift */; settings = {ASSET_TAGS = (); }; };
 		DBBE40A11BBF2E18007FD260 /* StopIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBE40A01BBF2E18007FD260 /* StopIndex.swift */; settings = {ASSET_TAGS = (); }; };
+		DBBE40A41BBF7409007FD260 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBE40A31BBF7409007FD260 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		DBBE409A1BBF0CA1007FD260 /* RouteStopsMapsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteStopsMapsCell.swift; sourceTree = "<group>"; };
 		DBBE409E1BBF14AC007FD260 /* StoreLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreLocation.swift; path = RoutR/StoreLocation.swift; sourceTree = "<group>"; };
 		DBBE40A01BBF2E18007FD260 /* StopIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopIndex.swift; sourceTree = "<group>"; };
+		DBBE40A31BBF7409007FD260 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBBE40A41BBF7409007FD260 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +109,7 @@
 		DB164ADC1BBBFC500040949D = {
 			isa = PBXGroup;
 			children = (
+				DBBE40A31BBF7409007FD260 /* CoreLocation.framework */,
 				DB164B211BBC062F0040949D /* RoutREntities */,
 				DB164AE71BBBFC500040949D /* RoutR */,
 				DB164AFF1BBBFC500040949D /* RoutRTests */,

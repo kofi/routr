@@ -27,5 +27,6 @@ extension Stop {
     @NSManaged var route: NSManagedObject?
     
     @NSManaged var stopToRoute: StopIndex?
+    @NSManaged var created:NSDate?
     
 }

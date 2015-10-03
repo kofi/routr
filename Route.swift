@@ -28,7 +28,6 @@ class Route: NSManagedObject {
         }
         
         newRoute.setStopIndexes()
-        
         return newRoute
     }
     
@@ -45,12 +44,79 @@ class Route: NSManagedObject {
             myStopIndex?.indexes[self.objectID] = count
             //(stop as! Stop).stopToRoute!.indexes[self.objectID] = count
             (stop as! Stop).stopToRoute = myStopIndex
-            let indexes = (stop as! Stop).stopToRoute!.indexes
-            print("\(indexes)")
+            //let indexes = (stop as! Stop).stopToRoute!.indexes
+            //print("\(indexes)")
             count++
+        }
+    }
+    
+    func setIndexForStop(stop: Stop, index: Int) {
+         stop.stopToRoute!.indexes[self.objectID] = index
+    }
+    
+    func getIndexForStop(stop: Stop)-> Int{
+        return stop.getIndexForRoute(self.objectID)
+    }
+    
+    func swapIndexesForStops(firstStop: Stop, secondStop: Stop) {
+        let index =  firstStop.getIndexForRoute(self.objectID)
+        setIndexForStop(firstStop, index: secondStop.getIndexForRoute(self.objectID))
+        setIndexForStop(secondStop, index: index)
+    }
+
+    func getDistanceBetweenStops() ->  [Float] { // [NSManagedObjectID: [NSManagedObjectID : Float] ]{
+        var  distances = [Float]()  //[NSManagedObjectID: [NSManagedObjectID : Float] ]()
+        let stopCount = self.stops?.count
+        
+        switch stopCount! {
+        case 0:
+            return distances
+        case 1:
+            return [Float(arc4random_uniform(50))]
+        default:
+            var loopcount = 1
+            for stop in self.stops!  {
+                if loopcount == 1 {
+                    distances.append(Float(arc4random_uniform(50)))
+                }
+                let indexforstop = getIndexForStop((stop as! Stop))
+                for stopnext in self.stops! {
+                    let indexforstopnext = getIndexForStop((stopnext as! Stop))
+                    if indexforstop == (indexforstopnext - 1) {
+                        //distances[stop.objectID] = [ stopnext.objectID : Float(arc4random_uniform(10))]
+                        distances.append(Float(arc4random_uniform(50)))
+                        break
+                    }
+                }
+                loopcount += 1
+                if loopcount > stopCount {
+                    break
+                }
+            }
+            return distances
         }
         
     }
-
+    
+    func isStopAtRouteIndex(stop: Stop, index: Int) -> Bool {
+//        for stop in self.stops!  {
+//            let thisIndex = getIndexForStop(stop as! Stop)
+//            if  thisIndex == index {
+//                return (stop as! Stop)
+//            }
+//        }
+        let thisIndex = getIndexForStop(stop)
+        return thisIndex == index
+    }
+    
+    func getStopForIndex(index: Int) -> Stop? {
+        for stop in self.stops!  {
+            let thisIndex = getIndexForStop(stop as! Stop)
+            if  thisIndex == index {
+                return (stop as! Stop)
+            }
+        }
+        return nil
+    }
 
 }
